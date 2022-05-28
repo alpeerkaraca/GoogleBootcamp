@@ -5,13 +5,14 @@ public class ParallaxEffect : MonoBehaviour
 {
     [SerializeField] private Vector2 pfxMultiplier;
     private float _textureUnitSizeX;
+    
 
     private Transform _cameraTransform;
     private Vector3 _lastCameraPos;
 
     private void Start()
     {
-        if (Camera.main != null) _cameraTransform = Camera.main.transform;
+        _cameraTransform = Camera.main.transform;
         _lastCameraPos = _cameraTransform.position;
         Sprite sprite = GetComponent<SpriteRenderer>().sprite;
         Texture2D texture = sprite.texture;

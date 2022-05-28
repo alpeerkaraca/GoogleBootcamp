@@ -4,18 +4,32 @@ namespace Enemy
 {
     public class Enemy1AI : MonoBehaviour 
     { 
-        [SerializeField] private Transform groundCheck;
-        [SerializeField] private LayerMask whatIsGround;
-        [SerializeField] private float 
-            groundCheckDistance, 
+        [SerializeField] private Transform 
+            groundCheck,
+            touchDamageCheck;
+        [SerializeField] private LayerMask 
+            whatIsGround,
+            whatIsPlayer;
+
+        [SerializeField] private float
+            groundCheckDistance,
             movementSpeed,
             maxHp,
-            knockbackDuration;
+            knockbackDuration,
+            lastTouchDamageTime,
+            touchDamageCooldown,
+            touchDamage,
+            touchDamageWidth,
+            touchDamageHeight;
+
         [SerializeField] private GameObject
             hitParticles,
             deathChunkParticle,
             deathBloodParticle;
-        [SerializeField] private Vector2 knockbackSpeed;
+        [SerializeField] private Vector2 
+            knockbackSpeed,
+            touchDamageBotLeft,
+            touchDamageTopRight;
     
         private enum State
         { 
@@ -33,7 +47,8 @@ namespace Enemy
         private float 
             _currentHp,
             _knockbackStartTime;
-    
+
+        private float[] attackDetails = new float[2];
         private int 
             _facingDir,
             _damageDir;
@@ -80,7 +95,8 @@ namespace Enemy
         private void UpdateMovingState()
         {
             _groundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
-
+    
+            CheckTouchDamage();
             if (!_groundDetected)
             {
                 Flip();
@@ -139,7 +155,26 @@ namespace Enemy
         //--OTHER FUNCTIONS--
 
 
-        private void Damage(float[] attackDetails)
+        // ReSharper disable Unity.PerformanceAnalysis
+        private void CheckTouchDamage()
+        {
+            if (Time.time >= lastTouchDamageTime + touchDamageCooldown)
+            {
+                touchDamageBotLeft.Set(touchDamageCheck.position.x - (touchDamageWidth / 2),touchDamageCheck.position.y - (touchDamageHeight / 2));
+                touchDamageTopRight.Set(touchDamageCheck.position.x + (touchDamageWidth / 2),touchDamageCheck.position.y + (touchDamageHeight / 2));
+
+                Collider2D hit = Physics2D.OverlapArea(touchDamageBotLeft, touchDamageTopRight,whatIsPlayer);
+
+                if (hit != null)
+                {
+                    lastTouchDamageTime = Time.time;
+                    attackDetails[0] = touchDamage;
+                    attackDetails[1] = _alive.transform.position.x;
+                    hit.SendMessage("Damage", attackDetails);
+                }
+            }
+        }
+        private void Damage()
         {
             _currentHp -= attackDetails[0];
 
@@ -149,8 +184,7 @@ namespace Enemy
                 _damageDir = -1;
             else
                 _damageDir = 1;
-        
-            //HitParticles
+            
             if (_currentHp > 0.0f)
                 SwitchState(State.Knockback);
             else if(_currentHp <= 0.0f)
@@ -197,8 +231,19 @@ namespace Enemy
 
         private void OnDrawGizmos()
         {
-            var position = groundCheck.position;
-            Gizmos.DrawLine(position, new Vector2(position.x, position.y - groundCheckDistance));
+            Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
+
+            Vector2 
+                botLeft = new Vector2(touchDamageCheck.position.x - (touchDamageWidth / 2),touchDamageCheck.position.y - (touchDamageHeight / 2)), 
+                botRight = new Vector2(touchDamageCheck.position.x + (touchDamageWidth / 2),touchDamageCheck.position.y - (touchDamageHeight / 2)),
+                topRight = new Vector2(touchDamageCheck.position.x + (touchDamageWidth / 2),touchDamageCheck.position.y + (touchDamageHeight / 2)),
+                topLeft = new Vector2(touchDamageCheck.position.x - (touchDamageWidth / 2),touchDamageCheck.position.y + (touchDamageHeight / 2));
+            
+            Gizmos.DrawLine(botLeft,botRight);
+            Gizmos.DrawLine(botRight,topRight);
+            Gizmos.DrawLine(topRight, topLeft);
+            Gizmos.DrawLine(topLeft, botLeft);
+
         }
     }
 }
