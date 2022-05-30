@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class Enemy1AI : MonoBehaviour 
-    { 
-        [SerializeField] private Transform 
+    public class Enemy1AI : MonoBehaviour
+    {
+        [SerializeField] private Transform
             groundCheck,
             touchDamageCheck;
         [SerializeField] private LayerMask 
@@ -30,6 +30,7 @@ namespace Enemy
             knockbackSpeed,
             touchDamageBotLeft,
             touchDamageTopRight;
+
     
         private enum State
         { 
@@ -43,6 +44,7 @@ namespace Enemy
         private GameObject _alive;
         private Vector2 _movement;
         private Animator _aliveAnim;
+        private Vector3 pos;
     
         private float 
             _currentHp,
@@ -84,6 +86,9 @@ namespace Enemy
                     UpdateDeadState();
                     break;
             }
+
+            pos = transform.position;
+
         }
 
         //--WALKING STATE--
@@ -154,9 +159,8 @@ namespace Enemy
     
         //--OTHER FUNCTIONS--
 
-
-        // ReSharper disable Unity.PerformanceAnalysis
-        private void CheckTouchDamage()
+        
+        private void CheckTouchDamage()             //Attack to player(Touch Damage)
         {
             if (Time.time >= lastTouchDamageTime + touchDamageCooldown)
             {
@@ -174,13 +178,13 @@ namespace Enemy
                 }
             }
         }
-        private void Damage()
+        public void Damage(float[] attackDetailsTaken)       //Attack Enemy (Owner of this script)
         {
-            _currentHp -= attackDetails[0];
+            _currentHp -= attackDetailsTaken[0];
 
-            Instantiate(hitParticles, _alive.transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f,360f)));
+            Instantiate(hitParticles, pos, Quaternion.Euler(0f, 0f, Random.Range(0f,360f)));
 
-            if (attackDetails[1] > _alive.transform.position.x)
+            if (attackDetailsTaken[1] > _alive.transform.position.x)
                 _damageDir = -1;
             else
                 _damageDir = 1;

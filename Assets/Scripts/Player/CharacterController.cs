@@ -1,4 +1,6 @@
 using System;
+using Enemy;
+using Unity.Mathematics;
 using UnityEngine;
 
 
@@ -10,8 +12,8 @@ public class CharacterController : MonoBehaviour
     [Header("Move")] 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float runSpeed = 9f;
-    [SerializeField] private float jumpForce = 25000f;
-    private float _horizontalMove;
+    [SerializeField] private float jumpVelocity = 50f;
+    public float _horizontalMove;
     private Vector3 _moveDirection;
     private Vector2 _velocity = Vector2.zero;
     private bool _isGround;
@@ -19,17 +21,21 @@ public class CharacterController : MonoBehaviour
     private bool _isWalking;
     private bool _jump;
     private bool _sprint;
-    private bool _facingRight = true;
+    public bool _facingRight = true;
     private bool _canFlip;
+    private bool canMove;
     
     [Header("Dash")]
     [SerializeField] private float dashForce = 250f;
     [SerializeField] private float dashCooldownTime = .5f;
-    private float _dashCooldownPassed;
+    [SerializeField] private float distanceBetweenImages;
+    [SerializeField] private float dashTime;
+    private float lastImageXpos;
+    private float dashStarted = Mathf.NegativeInfinity;
+    private float dashTimeLeft;
     private bool _isDashing;
-    private bool _dashReady;
-    private bool _canDash;
-    
+
+
     [Header("Taking Damage Knockback", order = 3)]
     private bool _knockback;
     [SerializeField]
@@ -40,17 +46,20 @@ public class CharacterController : MonoBehaviour
     
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
+    private Enemy1AI eAI;
     
     
     //Turn Strings to ID for better optimization.
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Jump = Animator.StringToHash("Jump");
     private static readonly int Sprint = Animator.StringToHash("Sprint");
+    private static readonly int tookDamage = Animator.StringToHash("Took Damage");
 
     private void Start()
     {  
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        eAI = GameObject.FindWithTag("Enemy").GetComponent<Enemy1AI>();
     }
 
     private void Update()
@@ -61,6 +70,7 @@ public class CharacterController : MonoBehaviour
         CheckDash();
         CheckJump();
         CheckSprint();
+        CheckTookDamage();
     }
 
     private void FixedUpdate()
@@ -101,26 +111,26 @@ public class CharacterController : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump")) //Check is pressed Space
             _jump = _isGround; //Set jump to ground so don't add jump task to queue.
-        _animator.SetBool(Jump, _jump && _isGround);
+        _animator.SetBool(Jump, _jump);
     }
     
     private void CheckDash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && (_dashCooldownPassed >= dashCooldownTime)) //Check reqs. of dash
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            _isDashing = true;
-            _canDash = true;
-            _canFlip = false;
-        }
-        if (!(_dashCooldownPassed >= dashCooldownTime))          //Check CD
-        {
-            _isDashing = false;
-            _canDash = false;
-            _dashCooldownPassed += Time.deltaTime;
-            Mathf.Clamp(_dashCooldownPassed, 0f, dashCooldownTime);
+            if(Time.time >= (dashStarted + dashCooldownTime))
+                AttempToDash();
         }
     }
-    
+
+    private void AttempToDash()
+    {
+        _isDashing = true;
+        dashTimeLeft = dashTime;
+        dashStarted = Time.time;
+        PlayerAfterImagePool.Instance.GetFromPool();
+        lastImageXpos = transform.position.x;
+    }
     private void CheckFlipDir()
     {
         if(_facingRight && _horizontalMove < 0)
@@ -137,6 +147,19 @@ public class CharacterController : MonoBehaviour
             _rigidbody2D.velocity = new Vector2(0.0f, _rigidbody2D.velocity.y);
         }
     }
+
+    private void CheckTookDamage()
+    {
+        _animator.SetBool(tookDamage, _knockback);
+    }
+
+    private void TryDash()
+    {
+        _isDashing = true;
+        dashStarted = Time.time;
+        PlayerAfterImagePool.Instance.GetFromPool();
+        lastImageXpos = transform.position.x;
+    }
     
     //--Physics Functions--
     private void LetsWalk()
@@ -152,81 +175,99 @@ public class CharacterController : MonoBehaviour
             _rigidbody2D.velocity = new Vector2(_horizontalMove * runSpeed, _rigidbody2D.velocity.y);
         }
     }
+
     private void LetsJump()
     {
         if (_isGround && _jump && !_knockback) //Make char jump
         {
-            if (_isWalking && !_isSprinting && _isGround)
+            if (_horizontalMove == 0)
             {
-                _rigidbody2D.AddForce(new Vector2(0f, jumpForce + 6000f),ForceMode2D.Force);
-                _jump = false;
+                _rigidbody2D.velocity = Vector2.up * jumpVelocity;
                 _isGround = false;
+                _jump = false;
+
             }
 
-            if (_isWalking && _isSprinting && _isGround)
+            if (Math.Abs(_horizontalMove) > 0 && _isSprinting == false)
             {
-                _rigidbody2D.AddForce(new Vector2(0f,jumpForce + 6000f));
-                _jump = false;
+                _rigidbody2D.velocity = Vector2.up * (jumpVelocity + 40);
                 _isGround = false;
+                _jump = false;
+
             }
 
-            if (!_isWalking && !_isSprinting && _isGround)
+            if (Math.Abs(_horizontalMove) > 0 && _isSprinting)
             {
-                _rigidbody2D.AddForce(new Vector2(0f, jumpForce - 15000));
-                _jump = false;
+                _rigidbody2D.velocity = Vector2.up * (jumpVelocity + 40);
                 _isGround = false;
+                _jump = false;
+
             }
         }
     }
-    
+
     private void LetsDash()
-    {
-        if (_canDash && !_knockback)
         {
-            _rigidbody2D.AddForce(_moveDirection * dashForce, ForceMode2D.Impulse);
-            _canDash = false;
+            if (_isDashing && !_knockback)
+            {
+                if (dashTimeLeft > 0)
+                {
+                    _canFlip = false;
+                    _rigidbody2D.velocity = new Vector2(dashForce * _horizontalMove, _rigidbody2D.velocity.y);
+                    dashTimeLeft -= Time.deltaTime;
+
+                    if (Math.Abs(transform.position.x - lastImageXpos) > distanceBetweenImages)
+                    {
+                        PlayerAfterImagePool.Instance.GetFromPool();
+                        lastImageXpos = transform.position.x;
+                    }
+                }
+
+                if (dashTimeLeft <= 0)
+                {
+                    _isDashing = false;
+                    _canFlip = true;
+                }
+            }
+        }
+    
+        public void Knockback(int direction)
+        {
+            _knockback = true;
+            _knockbackStartTime = Time.time;
+            _rigidbody2D.velocity = new Vector2(knockbackSpeed.x * direction, knockbackSpeed.y);
+        }
+    
+        //--Other Functions--
+        public void DisableFlip()
+        {
+            _canFlip = false;
+        }
+
+        public void EnableFlip()
+        {
             _canFlip = true;
-            _isDashing = true;
-            _dashCooldownPassed = 0f;
         }
-    }
     
-    public void Knockback(int direction)
-    {
-        _knockback = true;
-        _knockbackStartTime = Time.time;
-        _rigidbody2D.velocity = new Vector2(knockbackSpeed.x * direction, knockbackSpeed.y);
-    }
-    
-    //--Other Functions--
-    public void DisableFlip()
-    {
-        _canFlip = false;
-    }
-
-    public void EnableFlip()
-    {
-        _canFlip = true;
-    }
-    
-    private void Flip()
-    {
-        if (_canFlip && !_knockback)
+        private void Flip()
         {
-            _facingRight = !_facingRight;
-            _horizontalMove *= -1;
-            transform.Rotate(0f, 180f, 0f);
+            if (_canFlip && !_knockback)
+            {
+                _facingRight = !_facingRight;
+                _horizontalMove *= -1;
+                transform.Rotate(0f, 180f, 0f);
+            }
         }
-    }
     
-    public float FacingDir()
-    {
-        return _horizontalMove;
-    }
+        public float FacingDir()
+        {
+            return _horizontalMove;
+        }
 
-    public bool GetDashStatus()
-    {
-        return _isDashing;
-    }
+        public bool GetDashStatus()
+        {
+            return _isDashing;
+        }
+
     
 }

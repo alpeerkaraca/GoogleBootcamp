@@ -13,15 +13,17 @@ public class Stats : MonoBehaviour
         deathBloodPart;
 
     private GameManager gm;
+    public bool TookDamage;
 
-    private float currentHP;
+    private float
+        currentHP;
 
     private void Start()
     {
         currentHP = maxHp;
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        
     }
+    
 
     public void DecreaseHP(float amount)
     {
@@ -31,7 +33,8 @@ public class Stats : MonoBehaviour
         {
             Die();
         }
-        
+
+
     }
 
     
