@@ -1,51 +1,69 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 
-public class Stats : MonoBehaviour
+namespace Player
 {
-    [SerializeField] private float maxHp;
-
-    [SerializeField] private GameObject
-        deathChunkPart,
-        deathBloodPart;
-
-    private GameManager gm;
-    public bool TookDamage;
-
-    private float
-        currentHP;
-
-    private void Start()
+    public class Stats : MonoBehaviour
     {
-        currentHP = maxHp;
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
-    
+        [SerializeField] private float maxHp;
 
-    public void DecreaseHP(float amount)
-    {
-        currentHP -= amount;
+        [SerializeField] private GameObject deathChunk;
+        private bool dead;
 
-        if (currentHP <= 0)
+        private GameManager gm;
+        public bool tookDamage;
+
+        private float
+        currentHp;
+
+        private HealthBar healthBar;
+        
+        private void Start()
         {
-            Die();
+            currentHp = maxHp;
+            dead = false;
+            gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+            healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+            if(GameObject.FindWithTag("Player") != null)
+                healthBar.SetMaxHP(maxHp);
+        }
+
+        private void Update()
+        {   if(GameObject.FindWithTag("Player") != null)
+            healthBar.SetHealth(currentHp);
         }
 
 
-    }
 
+
+
+        public void DecreaseHp(float amount)
+        {
+            currentHp -= amount;
+
+            if (currentHp <= 0)
+            {
+                Die();
+                dead = true;
+            }
+            else
+                dead = false;
+
+
+        }
+        //Other Functions
+        private void Die()
+        {
+            gm.Respawn();
+            Instantiate(deathChunk);
+            Destroy(gameObject);
+        }
+
+
+        public bool GetDeadStatus()
+        {
+            return dead;
+        }
     
-    //Other Functions
-    private void Die()
-    {
-        Instantiate(deathChunkPart, transform.position, deathChunkPart.transform.rotation);
-        Instantiate(deathBloodPart, transform.position, deathBloodPart.transform.rotation);
-        gm.Respawn();
-        Destroy(gameObject);
     }
-    
-    
 }

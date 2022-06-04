@@ -6,13 +6,19 @@ public class PlayerFireballAttack : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject fireBallPrefab;
-
+    public ParticleSystem attackParticles;
+    private static readonly int Attack = Animator.StringToHash("attack");
+    public AudioSource fireballSfx;
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             KatonGoukakyuuNoJutsu();
+            GetComponent<Animator>().SetBool("attack", true);
         }
+        else
+            GetComponent<Animator>().SetBool("attack", false);
         var impactDestroy = GameObject.Find("impactEffect(Clone)");         
         var hitParticleDestroy = GameObject.Find("HitParticles_0 1(Clone)");
         
@@ -23,6 +29,9 @@ public class PlayerFireballAttack : MonoBehaviour
     private void KatonGoukakyuuNoJutsu()        //Note for any one who reads: Defined this function's name like this cuz felling kinda bored :/
     {
         Instantiate(fireBallPrefab, firePoint.position, firePoint.rotation);
+        attackParticles.Play();
+        fireballSfx.Play();
+        
     }
-    
+
 }

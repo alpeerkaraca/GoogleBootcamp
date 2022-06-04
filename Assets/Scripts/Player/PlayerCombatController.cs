@@ -5,23 +5,23 @@ namespace Player
     public class PlayerCombatController : MonoBehaviour
     {
         private CharacterController charController;
-        private float[] attackDetails = new float[2];
+        private AttackDetails attackDetails;
         private Stats stats;
         private void Start()
         {
             charController = GetComponent<CharacterController>();
             stats = GetComponent<Stats>();
         }
-
-        private void Damage(float[] attackDetails)
+        
+        private void Damage(AttackDetails details)
         {
             if (!charController.GetDashStatus())    //Player won't take damage if dashing.
             {
                 int direction;
 
-                stats.DecreaseHP(attackDetails[0]);
+                stats.DecreaseHp(details.damageAmount);
             
-                if (attackDetails[1] < transform.position.x)
+                if (details.position.x < transform.position.x)
                 {
                     direction = 1;
                 }

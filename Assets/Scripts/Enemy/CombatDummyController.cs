@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using CharacterController = Player.CharacterController;
 using Random = UnityEngine.Random;
 
 namespace Enemy
@@ -28,8 +29,6 @@ namespace Enemy
 
         private int _playerFacingDir;
 
-        private CharacterController _pc;
-
         private GameObject
             _aliveGo,
             _brokenTopGo,
@@ -48,7 +47,7 @@ namespace Enemy
         {
             _currentHp = maxHp; 
 
-            _pc = GameObject.Find("Player").GetComponent<CharacterController>();
+            GameObject.Find("Player").GetComponent<CharacterController>();
 
             _aliveGo = transform.Find("Alive").gameObject;
             _brokenTopGo = transform.Find("BrokenTop").gameObject;
@@ -70,10 +69,10 @@ namespace Enemy
             CheckKnockback();
         }
 
-        private void Damage(float[] details)
+        private void Damage(AttackDetails details)
         {
-            _currentHp -= details[0];
-            if (details[1] < _aliveGo.transform.position.x)
+            _currentHp -= details.damageAmount;
+            if (details.position.x < _aliveGo.transform.position.x)
             {
                 _playerFacingDir = 1;
             }

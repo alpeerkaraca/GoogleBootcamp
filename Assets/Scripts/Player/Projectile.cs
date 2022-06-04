@@ -12,35 +12,28 @@ public class Projectile : MonoBehaviour
     
 
     public GameObject impactEffect;
-    
-    private float[] attackInfos = new float[2];
+
+    private AttackDetails attackInfos;
 
     private float timerStart;
     public Rigidbody2D rb;
     private void Start()
     {
         rb.velocity = transform.right * speed;
-        attackInfos[0] = damage;
-        timerStart = Time.time;
     }
 
     private void Update()
     {
-        attackInfos[1] = transform.position.x;
-        if(Time.time > timerStart + timeShouldPassBeforeDestroy)
-            Destroy(gameObject);
+       //if (Time.time > timerStart + timeShouldPassBeforeDestroy) ;
+        Destroy(gameObject,timeShouldPassBeforeDestroy);
 
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        attackInfos.damageAmount = damage;
+        attackInfos.position = transform.position;
         col.gameObject.transform.parent.SendMessage("Damage",attackInfos);
-        /*
-        Enemy1AI enemy = col.GetComponent<Enemy1AI>();
-        if (enemy != null)
-        {
-            enemy.Damage(attackInfos);
-        }*/
         Instantiate(impactEffect, transform.position, transform.rotation);
         Destroy(gameObject);
     }

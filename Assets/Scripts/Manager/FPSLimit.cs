@@ -1,12 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSLimit : MonoBehaviour
+namespace Manager
 {
-    private void Start()
+    public class FPSLimit : MonoBehaviour
     {
-        Application.targetFrameRate = 60;
+        public int targetFPS = 60;
+        private void Start()
+        {
+            Application.targetFrameRate = targetFPS;
+        }
     }
 }
