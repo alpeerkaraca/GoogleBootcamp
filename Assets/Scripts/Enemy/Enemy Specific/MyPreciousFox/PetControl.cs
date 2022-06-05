@@ -49,7 +49,7 @@ namespace Enemy.Enemy_Specific.MyPreciousFox
                 }
                 else if (petted && isBee)
                 {
-                    anim.SetBool("move", true);
+                    anim.SetBool(Move, true);
                     if(followBee != null)
                         transform.position = Vector2.MoveTowards(transform.position, followBee.position, speed * Time.deltaTime);
                 }

@@ -14,8 +14,7 @@ namespace UI
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if(Input.anyKeyDown)
-                interactKey.interactAction.Invoke();
+            interactKey.interactAction.Invoke();
         }
         private void OnTriggerExit2D(Collider2D other)
         {

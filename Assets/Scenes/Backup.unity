@@ -278,10 +278,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 36454063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e0845db8b7c2654bad33666efda7a8e, type: 3}
+  m_Script: {fileID: 11500000, guid: a7458ca3bffde144d9b8768566632aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: {fileID: 0}
 --- !u!61 &36454065
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18256,7 +18255,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7ac20a90e039e3d41b02ce839052c8df, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
@@ -18613,7 +18612,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.154, y: 2.417, z: -10}
+  m_LocalPosition: {x: 4.154, y: 2.924, z: -10}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18838,7 +18837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInRange: 0
-  interactKey: 330
+  interactKey: 101
   interactAction:
     m_PersistentCalls:
       m_Calls:
@@ -18867,7 +18866,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 1.2065897, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -18878,7 +18877,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.2}
+  m_Size: {x: 3.4131794, y: 0.2}
   m_EdgeRadius: 0
 --- !u!4 &625881707
 Transform:
@@ -18902,7 +18901,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 625881703}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 747288c3effabf546b2300584f2b9e49, type: 3}
   m_Name: 
@@ -18985,7 +18984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    NPCName: 
+    NPCName: Rigurd
     sentences:
     - "Sen oradaki \xE7abuk bana yard\u0131m et!\t\t\t"
     - "Ne bu g\xF6zler neyden korkuyorsun?\n"
@@ -25872,7 +25871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    NPCName: 
+    NPCName: Mestan
     sentences:
     - "HRRR!\nBu k\xF6t\xFC koku da ne"
     - "S-S-S-SE-SEN NES\u0130N B\xD6YLE\n"
@@ -26039,6 +26038,11 @@ MonoBehaviour:
     - "Buraya gel \xE7abuk!"
     - Genelde buraya kimseler gelmez ama ama sen geldin
     - "Senin i\xE7in bir hediyem var."
+    - "*Bu evrenden \xE7\u0131kmak i\xE7in yolun sonundaki portala ula\u015F."
+    - "*Canl\u0131larla arkada\u015F olmak i\xE7in \"E\" tu\u015Funu kullan."
+    - "*Sava\u015Fman gerekirse \"Z\" tu\u015Funa bas. Ate\u015F topu f\u0131rlat\u0131rs\u0131n."
+    - "*At\u0131lma hareketi yaparken yarat\u0131klar sana zarar veremez."
+    - "Benden \u015Fimdilik bu kadar. \u0130yi maceralar."
 --- !u!1 &1343220532
 GameObject:
   m_ObjectHideFlags: 0
@@ -26445,7 +26449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    NPCName: 
+    NPCName: Tilki
     sentences:
     - 'YETER ARTIK SUS! '
     - "Ne \xE7ok konu\u015Ftun susmak bilmiyorsun ne oldu?"
@@ -27161,7 +27165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657426110}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.154, y: 2.417, z: -10}
+  m_LocalPosition: {x: 4.154, y: 2.924, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -39234,7 +39238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    NPCName: 
+    NPCName: Ananas
     sentences:
     - "SEN ORADAK\u0130 DUR BAKALIM"
     - Nereden geldin ve nereye gidiyorsun?
@@ -59086,6 +59090,10 @@ PrefabInstance:
       propertyPath: fireballSfx
       value: 
       objectReference: {fileID: 402777969}
+    - target: {fileID: 7184112912246303706, guid: d54c3e600382ad2408123ff3e1b12a91, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.507
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d54c3e600382ad2408123ff3e1b12a91, type: 3}
 --- !u!1 &7546606776291167192

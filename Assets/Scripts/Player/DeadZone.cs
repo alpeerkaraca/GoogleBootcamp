@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadZone : MonoBehaviour
+namespace Player
 {
-    // Start is called before the first frame update
-    void Start()
+    public class DeadZone : MonoBehaviour
     {
-        
-    }
+        private Stats stats;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Update()
+        {
+            if (GameObject.FindWithTag("Player") != null)
+                stats = GameObject.FindWithTag("Player").GetComponent<Stats>();
+
+        }
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            stats.DecreaseHp(Mathf.Infinity);
+        }
     }
 }

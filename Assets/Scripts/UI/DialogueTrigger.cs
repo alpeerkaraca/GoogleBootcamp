@@ -1,15 +1,17 @@
-using System;
 using UnityEngine;
 
-public class DialogueTrigger : MonoBehaviour
+namespace UI
 {
-
-    public Dialogue dialogue;
-    
-    public void TriggerDialogue()
+    public class DialogueTrigger : MonoBehaviour
     {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+
+        public Dialogue dialogue;
+    
+        public void TriggerDialogue()
+        {
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        }
+    
+    
     }
-    
-    
 }
