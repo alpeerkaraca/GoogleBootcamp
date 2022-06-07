@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d21f6ece3b46479f0c328f8c6007e0, type: 3}
+  m_Name: FontGradient
+  m_EditorClassIdentifier: 
+  colorMode: 3
+  topLeft: {r: 0.8962264, g: 0.6817422, b: 0.25787643, a: 1}
+  topRight: {r: 0.8207547, g: 0.6032709, b: 0.16647384, a: 1}
+  bottomLeft: {r: 0.754717, g: 0.51601064, b: 0.08899963, a: 1}
+  bottomRight: {r: 0.6886792, g: 0.33884373, b: 0.029236369, a: 1}
