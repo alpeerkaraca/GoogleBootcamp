@@ -1,50 +1,60 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+namespace UI
 {
-    public static bool GameIsPaused = false;
-
-    public GameObject pauseMenuUI;
-
-    private void Update()
+    public class PauseMenu : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        public static bool GameIsPaused;
+
+        public GameObject pauseMenuUI;
+        [SerializeField] private GameObject optMenu,
+        pauseMenu;
+
+        private void Start()
         {
-            if (GameIsPaused)
+            GameIsPaused = false;
+        }
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Resume();
-            }
-            else
-            {
-                Pause();
+                if (GameIsPaused)
+                {
+                    Resume();
+                    optMenu.SetActive(false);
+                    pauseMenu.SetActive(false);
+                    
+                }
+                else
+                {
+                    Pause();
+                }
             }
         }
-    }
 
-    public void Resume()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
-    }
+        public void Resume()
+        {
+            pauseMenuUI.SetActive(false);
+            Time.timeScale = 1f;
+            GameIsPaused = false;
+        }
 
-    void Pause()
-    {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        GameIsPaused = true;
-    }
+        void Pause()
+        {
+            pauseMenuUI.SetActive(true);
+            Time.timeScale = 0f;
+            GameIsPaused = true;
+        }
 
-    public void LoadMenu()
-    {
-        print("loading menu");
-    }
-
-    public void QuitGame()
-    {
-        print("quitting");
+        public void LoadMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+        public void CloseApp()
+        {
+            Application.Quit();
+        }
     }
 }

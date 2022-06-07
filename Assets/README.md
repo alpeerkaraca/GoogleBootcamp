@@ -6,7 +6,6 @@ Oyuna eklemek istediğim daha bir sürü özellik olmasına rağmen  (En başın
 
 Hayatıma yön vermemde bana sağlamış olduğunuz için hepinize teşekkür ederim. Sağlıcakla kalın.
 
--Icarus Games Ekibinden Alper Karaca
-
+-Unity35 Ekibinden Alper Karaca
 
 <3 Google Oyun Ve Akademi Ailesi <3
