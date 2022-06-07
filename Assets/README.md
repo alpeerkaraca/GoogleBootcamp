@@ -8,4 +8,4 @@ Hayatıma yön vermemde bana sağlamış olduğunuz için hepinize teşekkür ed
 
 -Unity35 Ekibinden Alper Karaca
 
-<3 Google Oyun Ve Akademi Ailesi <3
+<33 Google Oyun Ve Akademi Ailesi <33
