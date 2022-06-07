@@ -83,6 +83,10 @@ Go After It oyunumuz, günlük hayatta yaşadığımız üç temel duyguya odakl
 ![WhatsApp Image 2022-06-07 at 11 45 22](https://user-images.githubusercontent.com/56842981/172358095-d285703c-74cf-47f7-9307-9f7ea6748935.jpeg)
 ![WhatsApp Image 2022-06-07 at 00 30 21](https://user-images.githubusercontent.com/56842981/172358113-fe219479-5b71-40f0-9177-0af68d0af62e.jpeg)
 
+![WhatsApp Image 2022-06-07 at 13 31 34](https://user-images.githubusercontent.com/56842981/172359690-101c87b6-9a4c-4943-9ee5-808ab5f06d7e.jpeg)
+![WhatsApp Image 2022-06-07 at 13 31 33 (1)](https://user-images.githubusercontent.com/56842981/172359695-ffbe8253-dbc7-4b29-a7a3-23e7e13488e5.jpeg)
+![WhatsApp Image 2022-06-07 at 13 31 33](https://user-images.githubusercontent.com/56842981/172359697-a9b01b1e-ad2e-444e-91dc-94453a324816.jpeg)
+
 
 - Sprint Review: Bu sprintte geriye kalan tüm eksikliller tamamlandı oyunun son versiyonu hazırlandı. Ayrıca pixelart şeklindeki ana karakter tasarımındaki eksiklikler de giderildi.
 - Sprint Retrospective:
