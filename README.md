@@ -65,3 +65,27 @@ Go After It oyunumuz, günlük hayatta yaşadığımız üç temel duyguya odakl
 -   Unit test'ler için ayrılan efor/saat arttırılmalı
 -   Sahnelerin tasarlanması hızlandırılmalı
 
+## SPRINT 3
+- Sprint Notları: Assetler ve karakter tasrımları tamamlandı. Animasyon ve character controller tamamlandı. Sahne tasarımları tamamlandı.
+- Sprint içinde tamamlanması tahmin edilen puan: 100
+- Puan tamamlama mantığı: Toplamda proje boyunca tamamlanması gereken 300 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde bu sprint'in 100 olması gerektiğine karar verildi.
+- Daily Scrum: Grup üyelerinin yoğunlukları sebbeiyle günlük scrum değerlendirmelerinin Whatsapp üzerinden yapılmasına karar verilmiştir. Salı ve Cumartesi günleri ise Discord üzerinden 1-2 saatlik toplantılar gerçekleştirilmiştir.
+
+![image](https://user-images.githubusercontent.com/56842981/172356734-7ae6b42f-8f5e-4ae4-89e1-e6afb4c6cb94.png)
+![image](https://user-images.githubusercontent.com/56842981/172356821-c4f2a983-54ac-4b6e-a435-a66589c11c87.png)
+![image](https://user-images.githubusercontent.com/56842981/172356968-844564d1-8fa1-47c6-9ba1-1ab0b3b5f616.png)
+
+- Sprint board update: Sprint board screenshotları:
+
+![image](https://user-images.githubusercontent.com/56842981/172357254-414a7cbc-f54c-461a-b1b7-e26cb4915b95.png)
+
+** Ürün Durumu **: Ekran görüntüleri:
+![WhatsApp Image 2022-06-07 at 11 45 22](https://user-images.githubusercontent.com/56842981/172358095-d285703c-74cf-47f7-9307-9f7ea6748935.jpeg)
+![WhatsApp Image 2022-06-07 at 00 30 21](https://user-images.githubusercontent.com/56842981/172358113-fe219479-5b71-40f0-9177-0af68d0af62e.jpeg)
+
+
+- Sprint Review: Bu sprintte geriye kalan tüm eksikliller tamamlandı oyunun son versiyonu hazırlandı. Ayrıca pixelart şeklindeki ana karakter tasarımındaki eksiklikler de giderildi.
+- Sprint Retrospective:
+-   Unit test'ler için ayrılan efor/saat arttırılmalı
+-   Sahnelerin tasarlanması hızlandırılmalı
+
